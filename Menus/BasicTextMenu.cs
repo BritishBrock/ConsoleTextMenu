@@ -20,7 +20,7 @@ namespace ConsoleTextMenu.Menus
         private int _BufferY = 2;
         private int _CurrentCursorPosX = 0;
         private int _CurrentCursorPosY = 0;
-        private int _MaxLength = 50;
+        private int _MaxLength = 100;
         public BasicTextMenu(string textHeader,string[] options)
         {
             
@@ -33,30 +33,26 @@ namespace ConsoleTextMenu.Menus
             updateCursorPostion(0,_BufferY);
             write(_TextHeader + "\n");
             foreach(string option in _Options)
-            {
-                
+            {    
                 if (option.Length / _MaxLength > 0)
                 {
-                    int sum = 0;
-                    for (int i = 0;  i <= option.Length / (_MaxLength - _BufferX); i++)
+                    string saux = "";
+                    int devidable = option.Length / (_MaxLength - _BufferX);
+                    for (int i = 0;  i <= devidable - 1; i++)
                     {
-                        string saux = "";
-                        sum += (_MaxLength - _BufferX) % option.Length;
-                        if(sum% option.Length> (_MaxLength - _BufferX)) saux = option.Substring(((_MaxLength - _BufferX) * i), (_MaxLength - _BufferX));
-                        else saux = option.Substring(((_MaxLength - _BufferX) * i), sum % option.Length);
+                         saux = "";
+
+                        saux = option.Substring((_MaxLength - _BufferX) * i, (_MaxLength - _BufferX));
                         write(saux + "\n");
                     }
-                    
+                    int charLeft = option.Length % (option.Length / (_MaxLength - _BufferX));
+                    saux = option.Substring((_MaxLength - _BufferX) * devidable, charLeft);
+                    write(saux + "\n");
+
                 }
                 else write(option + "\n");
-
-
             }
-
-
             createBorder();
-
-
         }
         private int optionPicked()
         {
@@ -99,6 +95,7 @@ namespace ConsoleTextMenu.Menus
                 Console.SetCursorPosition(i, auxY);
                 Console.Write('-');
             }
+
         }
 
         
