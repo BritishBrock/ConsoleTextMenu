@@ -30,7 +30,7 @@ namespace ConsoleTextMenu.Menus
             _TextHeader = textHeader;
         }
 
-        public void show()
+        public int show()
         {
         
             updateCursorPostion(0,_BufferY);
@@ -41,14 +41,14 @@ namespace ConsoleTextMenu.Menus
                 if (option.Length / _MaxLength > 0)
                 {
                     string saux = "";
-                    int devidable = option.Length / (_MaxLength - _BufferX);
-                    for (int i = 0;  i <= devidable - 1; i++)
+                    int divisionable = option.Length / (_MaxLength - _BufferX);
+                    for (int i = 0;  i <= divisionable - 1; i++)
                     {
                         saux = option.Substring((_MaxLength - _BufferX) * i, (_MaxLength - _BufferX));
                         write(saux + "\n");
                     }
                     int charLeft = option.Length % (option.Length / (_MaxLength - _BufferX));
-                    saux = option.Substring((_MaxLength - _BufferX) * devidable, charLeft);
+                    saux = option.Substring((_MaxLength - _BufferX) * divisionable, charLeft);
                     write(saux + "\n");
 
                 }
@@ -56,9 +56,9 @@ namespace ConsoleTextMenu.Menus
                
             }
             createBorder();
-            chooseOption();
+            return chooseOption();
         }
-        private void chooseOption() {
+        private int chooseOption() {
             ValueTuple<Int32, Int32> pos = Console.GetCursorPosition();
             int optionPicked = 0;
             updateCursorPostion(_OptionsPositions[optionPicked][0], _OptionsPositions[optionPicked][1]);
@@ -66,6 +66,7 @@ namespace ConsoleTextMenu.Menus
             String input = Console.ReadKey(true).Key.ToString();
 
             while (!(input == "Enter")) {
+
                 switch (input)
                 {
                     case "S":
@@ -76,6 +77,7 @@ namespace ConsoleTextMenu.Menus
                         optionPicked--;
                         break;
                 }
+
                 if (optionPicked < 0) optionPicked = _OptionsPositions.Count - 1;
                 if (optionPicked == _OptionsPositions.Count) optionPicked = 0;
                 write("   ", 1, 0);
@@ -85,7 +87,8 @@ namespace ConsoleTextMenu.Menus
             
             }
             updateCursorPostion(pos.Item1,pos.Item2);
-
+            Console.Clear();
+            return optionPicked;
         }
 
 
