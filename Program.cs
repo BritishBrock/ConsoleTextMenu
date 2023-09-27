@@ -6,12 +6,14 @@ namespace ConsoleTextMenu
     {
         static void Main(string[] args)
         {
-            BasicTextMenu bT = new BasicTextMenu("BRUH\n", new string[] { "hello?", "goodbye?", "who goigs gon=??", "yes" });
-            Console.Write(bT.show());
+            //BasicTextMenu bT = new BasicTextMenu("BRUH\n", new string[] { "hello?", "goodbye?", "who goigs gon=??", "yes" });
+            //Console.Write(bT.show());
 
 
-            //ScrollingTextMenu sT = new ScrollingTextMenu(new string[] { "hello?", "goodbye?", "who goigs gon=??", "yes" });
-            //sT.inicialize();
+            ScrollingTextMenu sT = new ScrollingTextMenu(new string[] { "hello?", "goodbye?", "who goigs gon=??", "yes" });
+            sT.inicialize();
+
+
         }
     }
 }
