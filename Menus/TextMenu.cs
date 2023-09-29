@@ -15,6 +15,7 @@ namespace ConsoleTextMenu.Menus
         internal int _MaxLength = 100;
         internal int _BufferX = 5;
         internal int _BufferY = 2;
+        internal int _Maxheight = 0;
 
         internal void write(string text)
         {
@@ -33,6 +34,7 @@ namespace ConsoleTextMenu.Menus
         {
             _CurrentCursorPosX = x;
             _CurrentCursorPosY = y;
+            _Maxheight = (_CurrentCursorPosY > _Maxheight ? _CurrentCursorPosY : _Maxheight);
             Console.SetCursorPosition(_CurrentCursorPosX, _CurrentCursorPosY);
         }
 
@@ -40,12 +42,13 @@ namespace ConsoleTextMenu.Menus
         {
             _CurrentCursorPosX = pos.Item1;
             _CurrentCursorPosY = pos.Item2;
+            _Maxheight = (_CurrentCursorPosY > _Maxheight ? _CurrentCursorPosY : _Maxheight);
             Console.SetCursorPosition(_CurrentCursorPosX, _CurrentCursorPosY);
         }
 
         internal void createBorder()
         {
-            int auxY = _CurrentCursorPosY + 1;
+            int auxY = _Maxheight + 1;
             int auxX = _MaxLength + 1;
 
             for (int i = 0; i < auxY; i++)
@@ -74,7 +77,7 @@ namespace ConsoleTextMenu.Menus
             Console.Write(_Corners[2]);
             Console.SetCursorPosition(auxX, 0);
             Console.Write(_Corners[3]);
-            updateCursorPostion(0, _CurrentCursorPosY + 2);
+            updateCursorPostion(0, auxY + 2);
 
         }
     }

@@ -8,10 +8,31 @@ namespace ConsoleTextMenu.Menus
 {
     internal class BoxTextMenu : TextMenu
     {
+
+        public struct Spacing {
+            public int _x { get; set; }
+            public int _y { get; set; }
+            public Spacing(int x, int y) {
+                _x = x;
+                _y = y;
+            }
+        }
+        public struct Size
+        {
+            public int _width { get; set; }
+            public int _height { get; set; }
+            public Size(int width, int height)
+            {
+                _width = width;
+                _height = height;
+            }
+        }
+
         private string[] _Options;
         private string _TextHeader;
-
-
+        private int _RowsAmount = 1;
+        private Size _Size = new Size(20,2);
+        private Spacing _Spacing = new Spacing(10, 10);
         private List<int[]> _OptionsPositions = new List<int[]>();
         public BoxTextMenu(string textHeader, string[] options)
         {
@@ -22,23 +43,28 @@ namespace ConsoleTextMenu.Menus
 
         public int show()
         {
-
+            
             updateCursorPostion(4, _BufferY);
             write(_TextHeader + "\n");
             int extraSpacing = 10;
             int space = (_MaxLength - _BufferY) - extraSpacing;
-            createBox(20,20,"i");
-            for (int i = 0; i < _Options.Length; i++) {
-                
+
+
+
+            int currentMaxHeight = _Maxheight;
+            for (int i = 0,x = 0,y = 0; i < _Options.Length; i++,x++) {
+                if (x >= _RowsAmount) {
+                    x = 0;
+                    y++;
+                }
+                createBox((x * _Spacing._x) +10, (y* _Spacing._y) + currentMaxHeight, _Options[i], _Size._width, _Size._height);
             }
 
             createBorder();
-            return 1;
+            return chooseOption();
         }
 
-        private void createBox(int posx, int posy, string item) {
-            int auxX = 4;
-            int auxY = 2;
+        private void createBox(int posx, int posy, string item,int auxX, int auxY) {
             for (int i = 0; i < auxY; i++)
             {
                 updateCursorPostion(posx + 0, posy + i);
@@ -64,6 +90,7 @@ namespace ConsoleTextMenu.Menus
             Console.Write(_Corners[3]);
             updateCursorPostion(posx + auxX / 2, posy + auxY / 2);
             Console.Write(item);
+            _OptionsPositions.Add(new int[]{ posx, posy + auxY / 2 });
             updateCursorPostion(0, posy + auxY + 1);
 
         }
@@ -82,17 +109,23 @@ namespace ConsoleTextMenu.Menus
                 int prev = optionPicked;
                 switch (input)
                 {
-                    case "S":
+                    case "D":
                         optionPicked++;
                         break;
 
-                    case "W":
+                    case "A":
                         optionPicked--;
+                        break;
+                    case "S":
+                        optionPicked+= _RowsAmount;
+                        break;
+                    case "W":
+                        optionPicked-= _RowsAmount;
                         break;
                 }
 
                 if (optionPicked < 0) optionPicked = _OptionsPositions.Count - 1;
-                if (optionPicked == _OptionsPositions.Count) optionPicked = 0;
+                if (optionPicked >= _OptionsPositions.Count) optionPicked = 0;
                 write("   ", _OptionsPositions[prev][0] - 3, _OptionsPositions[prev][1]);
                 updateCursorPostion(_OptionsPositions[optionPicked][0], _OptionsPositions[optionPicked][1]);
                 write(">>>", _OptionsPositions[optionPicked][0] - 3, _OptionsPositions[optionPicked][1]);
