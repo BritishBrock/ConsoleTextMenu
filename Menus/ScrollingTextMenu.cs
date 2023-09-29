@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -71,21 +72,24 @@ namespace ConsoleTextMenu.Menus
         {
 
             String text = _Texts[_CurrentTextOption];
-                if (text.Length / _MaxLength > 0)
+            int charLeft = text.Length;
+            updateCursorPostion(4, 2);
+            if (text.Length / _MaxLength > 0)
                 {
+                
                     string saux = "";
                     int divisionable = text.Length / (_MaxLength - _BufferX);
                     for (int i = 0; i <= divisionable - 1; i++)
                     {
                         saux = text.Substring((_MaxLength - _BufferX) * i, (_MaxLength - _BufferX));
-                        write(saux + "\n");
+                        write(saux + "\n",4,_CurrentCursorPosY);
+                        charLeft -= (_MaxLength - _BufferX);
                     }
-                    int charLeft = text.Length % (text.Length / (_MaxLength - _BufferX));
                     saux = text.Substring((_MaxLength - _BufferX) * divisionable, charLeft);
-                    write(saux + "\n");
+                    write(saux + "\n", 4, _CurrentCursorPosY);
 
                 }
-                else write(text + "\n",5,2);
+                else write(text + "\n");
 
 
             updateCursorPostion(20, _CurrentCursorPosY);

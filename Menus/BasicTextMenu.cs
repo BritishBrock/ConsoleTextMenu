@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ConsoleTextMenu.Menus
 {
@@ -36,6 +37,7 @@ namespace ConsoleTextMenu.Menus
             {
                 updateCursorPostion(4, _CurrentCursorPosY);
                 _OptionsPositions.Add(new int[] { _CurrentCursorPosX, _CurrentCursorPosY });
+                int charLeft = option.Length;
                 if (option.Length / _MaxLength > 0)
                 {
                     string saux = "";
@@ -43,9 +45,9 @@ namespace ConsoleTextMenu.Menus
                     for (int i = 0;  i <= divisionable - 1; i++)
                     {
                         saux = option.Substring((_MaxLength - _BufferX) * i, (_MaxLength - _BufferX));
-                        write(saux + "\n");
+                        write(saux + "\n",4,_CurrentCursorPosY);
+                        charLeft -= (_MaxLength - _BufferX);
                     }
-                    int charLeft = option.Length % (option.Length / (_MaxLength - _BufferX));
                     saux = option.Substring((_MaxLength - _BufferX) * divisionable, charLeft);
                     write(saux + "\n", 4, _CurrentCursorPosY);
 
