@@ -41,30 +41,30 @@ namespace ConsoleTextMenu.Menus
             int auxY = 2;
             for (int i = 0; i < auxY; i++)
             {
-                Console.SetCursorPosition(posx + 0, posy + i);
+                updateCursorPostion(posx + 0, posy + i);
                 Console.Write(_Walls[0]);
-                Console.SetCursorPosition(posx + auxX, posy + i);
+                updateCursorPostion(posx + auxX, posy + i);
                 Console.Write(_Walls[3]);
                 
             }
             for(int i = 0; i < auxX; i++)
             {
-                Console.SetCursorPosition(posx + i, posy + 0);
+                updateCursorPostion(posx + i, posy + 0);
                 Console.Write(_Walls[1]);
-                Console.SetCursorPosition(posx + i, posy + auxY);
+                updateCursorPostion(posx + i, posy + auxY);
                 Console.Write(_Walls[2]);
             }
-            Console.SetCursorPosition(posx + 0, posy + 0);
+            updateCursorPostion(posx + 0, posy + 0);
             Console.Write(_Corners[0]);
-            Console.SetCursorPosition(posx + 0, posy + auxY);
+            updateCursorPostion(posx + 0, posy + auxY);
             Console.Write(_Corners[1]);
-            Console.SetCursorPosition(posx + auxX, posy + auxY);
+            updateCursorPostion(posx + auxX, posy + auxY);
             Console.Write(_Corners[2]);
-            Console.SetCursorPosition(posx + auxX, posy + 0);
+            updateCursorPostion(posx + auxX, posy + 0);
             Console.Write(_Corners[3]);
-            Console.SetCursorPosition(posx + auxX / 2, posy + auxY / 2);
+            updateCursorPostion(posx + auxX / 2, posy + auxY / 2);
             Console.Write(item);
-            Console.SetCursorPosition(0, posy + auxY + 1);
+            updateCursorPostion(0, posy + auxY + 1);
 
         }
 
