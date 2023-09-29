@@ -42,16 +42,16 @@ namespace ConsoleTextMenu.Menus
                 int prev = optionPicked;
                 switch (input)
                 {
-                    case "S":
+                    case "D":
                         optionPicked++;
                         break;
 
-                    case "W":
+                    case "A":
                         optionPicked--;
                         break;
                 }
                 
-                if (optionPicked < 0) { optionPicked = 0;  };
+                if (optionPicked < 0) { optionPicked = _OptionsPositions.Count-1; };
                 if (optionPicked == _OptionsPositions.Count) { optionPicked = 0; }
                 write("   ", _OptionsPositions[prev][0]-3, _OptionsPositions[optionPicked][1]);
                 updateCursorPostion(_OptionsPositions[optionPicked][0], _OptionsPositions[optionPicked][1]);

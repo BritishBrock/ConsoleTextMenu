@@ -30,9 +30,9 @@ namespace ConsoleTextMenu.Menus
 
         private string[] _Options;
         private string _TextHeader;
-        private int _RowsAmount = 1;
-        private Size _Size = new Size(20,2);
-        private Spacing _Spacing = new Spacing(10, 10);
+        private int _RowsAmount = 3;
+        private Size _Size = new Size(4,2);
+        private Spacing _Spacing = new Spacing(6, 3);
         private List<int[]> _OptionsPositions = new List<int[]>();
         public BoxTextMenu(string textHeader, string[] options)
         {
